@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import time
+import os
+import pytest
 
 from sklearn.model_selection import train_test_split
 
@@ -21,8 +23,10 @@ def save_to_dict(int_sols_dict, multiplier, int_sol, train_acc, test_acc, train_
 
 def test_check_solutions_interface():
     # import data
-    pima_original_data_file_path = "tests/pima_original_data.csv"
-    pima_original_data_df = pd.read_csv(pima_original_data_file_path)
+    PIMA_DATA_PATH = "tests/pima_original_data.csv"
+    if not os.path.exists(PIMA_DATA_PATH):
+        pytest.skip(f"Data file not found: {PIMA_DATA_PATH}")
+    pima_original_data_df = pd.read_csv(PIMA_DATA_PATH)
     y = np.asarray(pima_original_data_df["Outcome"].values)
     X_original_df = pima_original_data_df.drop(columns="Outcome") # drop the Outcome column, which stores the y label for this binary classification problem
 

@@ -6,9 +6,13 @@ from fasterrisk.fasterrisk import RiskScoreOptimizer, RiskScoreClassifier
 from fasterrisk.utils import get_groupIndex_from_featureNames
 
 import sys
+import os
+import pytest
 
 
 def get_models_in_dict(data_path, y_label_name):
+    if not os.path.exists(data_path):
+        pytest.skip(f"Data file not found: {data_path}")
     df = pd.read_csv(data_path)
     X_df = df.drop(columns = [y_label_name])
     # print(df.head())

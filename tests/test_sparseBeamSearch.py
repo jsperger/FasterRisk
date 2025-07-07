@@ -13,11 +13,20 @@ def get_expected_beta0_betas():
     expected_betas[34] = 74.72272035
     return expected_beta0, expected_betas
 
+import os
+import pytest
+
 def test_sparseBeamSearch():
     # import data
-    train_data = np.asarray(pd.read_csv("tests/adult_train_data.csv"))
+    ADULT_TRAIN_DATA_PATH = "tests/adult_train_data.csv"
+    ADULT_TEST_DATA_PATH = "tests/adult_test_data.csv"
+
+    if not os.path.exists(ADULT_TRAIN_DATA_PATH) or not os.path.exists(ADULT_TEST_DATA_PATH):
+        pytest.skip(f"Data file(s) not found: {ADULT_TRAIN_DATA_PATH} or {ADULT_TEST_DATA_PATH}")
+
+    train_data = np.asarray(pd.read_csv(ADULT_TRAIN_DATA_PATH))
     X_train, y_train = train_data[:, 1:], train_data[:, 0]
-    test_data = np.asarray(pd.read_csv("tests/adult_test_data.csv"))
+    test_data = np.asarray(pd.read_csv(ADULT_TEST_DATA_PATH))
     X_test, y_test = test_data[:, 1:], test_data[:, 0]
     
     lambda2 = 1e-8
