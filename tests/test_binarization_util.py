@@ -1,10 +1,16 @@
 import numpy as np
 import pandas as pd
+import pytest
+import os
 from fasterrisk.utils import isEqual_upTo_8decimal
 from fasterrisk.binarization_util import convert_continuous_df_to_binary_df, BinBinarizer
 
+PIMA_DATA_PATH = "tests/pima_original_data.csv"
+
 def import_pima_data_X_df():
-    df = pd.read_csv("tests/pima_original_data.csv")
+    if not os.path.exists(PIMA_DATA_PATH):
+        pytest.skip(f"Data file not found: {PIMA_DATA_PATH}")
+    df = pd.read_csv(PIMA_DATA_PATH)
     X_df = df.drop(columns=['Outcome'])
     return X_df
 
