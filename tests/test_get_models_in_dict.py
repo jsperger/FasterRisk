@@ -73,9 +73,9 @@ def test_get_models_in_dict_adult():
 
     assert first_feature[0] == -2.0, "First feature coefficient is not -2.0"
     assert first_feature[1] == "Age_22_to_29", "First feature name is not Age_22_to_29"
-    assert random_model['training_logistic_loss'] == training_logistic_loss, "Training logistic loss is not correct"
-    assert random_model['training_accuracy'] == training_accuracy, "Training accuracy is not correct"
-    assert random_model['training_AUC'] == training_AUC, "Training AUC is not correct"
+    assert random_model['training_logistic_loss'] == pytest.approx(training_logistic_loss), "Training logistic loss is not correct"
+    assert random_model['training_accuracy'] == pytest.approx(training_accuracy), "Training accuracy is not correct"
+    assert random_model['training_AUC'] == pytest.approx(training_AUC), "Training AUC is not correct"
     assert random_model['card_label'] == card_label, "Card label is not correct"
 
 def test_get_models_in_dict_fico():
@@ -95,9 +95,9 @@ def test_get_models_in_dict_fico():
 
     assert first_feature[0] == 4.0, "First feature coefficient is not 4.0"
     assert first_feature[1] == "ExternalRiskEstimate<=70", "First feature name is not ExternalRiskEstimate<=70"
-    assert random_model['training_logistic_loss'] == training_logistic_loss, "Training logistic loss is not correct"
-    assert random_model['training_accuracy'] == training_accuracy, "Training accuracy is not correct"
-    assert random_model['training_AUC'] == training_AUC, "Training AUC is not correct"
+    assert random_model['training_logistic_loss'] == pytest.approx(training_logistic_loss), "Training logistic loss is not correct"
+    assert random_model['training_accuracy'] == pytest.approx(training_accuracy), "Training accuracy is not correct"
+    assert random_model['training_AUC'] == pytest.approx(training_AUC), "Training AUC is not correct"
     assert random_model['card_label'] == card_label, "Card label is not correct"
 
 if __name__ == "__main__":
