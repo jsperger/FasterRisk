@@ -51,9 +51,10 @@ We introduce an approach for efficiently producing a collection of high-quality 
 # Installation
 
 ```bash
-conda create -n FasterRisk python=3.9 # create a virtual environment
-conda activate FasterRisk # activate the virtual environment
-python -m pip install fasterrisk # pip install the fasterrisk package
+mkdir FasterRisk && cd FasterRisk
+uv venv -p 3.12 # create a virtual environment
+source .venv/bin/activate # activate the virtual environment
+uv pip install fasterrisk # pip install the fasterrisk package
 ```
 
 
