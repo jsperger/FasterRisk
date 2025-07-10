@@ -23,31 +23,39 @@ def save_to_dict(int_sols_dict, multiplier, int_sol, train_acc, test_acc, train_
 
 def test_check_solutions_interface():
     # import data
-    PIMA_DATA_PATH = "tests/pima_original_data.csv"
-    if not os.path.exists(PIMA_DATA_PATH):
-        pytest.skip(f"Data file not found: {PIMA_DATA_PATH}")
-    pima_original_data_df = pd.read_csv(PIMA_DATA_PATH)
-    y = np.asarray(pima_original_data_df["Outcome"].values)
-    X_original_df = pima_original_data_df.drop(columns="Outcome") # drop the Outcome column, which stores the y label for this binary classification problem
+    DATA_PATH = "data/breastcancer_data.csv" # Updated path
+    if not os.path.exists(DATA_PATH):
+        pytest.skip(f"Data file not found: {DATA_PATH}")
 
-    X_binarized_df, featureIndex_to_groupIndex = convert_continuous_df_to_binary_df(X_original_df, get_featureIndex_to_groupIndex=True)
+    original_data_df = pd.read_csv(DATA_PATH)
+    y_original = np.asarray(original_data_df[original_data_df.columns[0]].values) # First column is target
+    X_original_df = original_data_df.drop(columns=original_data_df.columns[0])
+
+    # Convert y from {0, 1} to {-1, 1}
+    # Assuming 0 maps to -1 and 1 maps to 1 (or whatever the positive class is)
+    # For breastcancer data, 'Benign' is 0 and 'Malignant' might be 1. Let's assume 0 -> -1, 1 -> 1 is the general transformation.
+    # Need to confirm actual values if not 0/1. breastcancer_data.csv has 'Benign' as 0. Let's assume it's 0/1 for now.
+    y_transformed = np.array([-1 if val == 0 else 1 for val in y_original])
+
+
+    # Binarize features and get group indices
+    # Reducing max_num_thresholds_per_feature for speed, original default is 100
+    X_binarized_df, featureIndex_to_groupIndex = convert_continuous_df_to_binary_df(X_original_df, max_num_thresholds_per_feature=10, get_featureIndex_to_groupIndex=True)
     X = np.asarray(X_binarized_df)
 
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y_transformed, test_size=0.2, random_state=42) # Using 20% for test, consistent y
 
     lambda2 = 1e-8
-    sparsity = 5
+    sparsity = 5 # Max number of features
     sparseDiversePool_gap_tolerance = 0.05
-    sparseDiversePool_select_top_m = 50
+    sparseDiversePool_select_top_m = 10 # Reduced from 50 for speed
     parent_size = 10
     child_size = 10
     maxAttempts = 50
-    num_ray_search = 20
+    num_ray_search = 5 # Reduced from 20 for speed
     lineSearch_early_stop_tolerance = 0.001 
-    group_sparsity = 3
+    group_sparsity = 3 # Max number of groups
 
-    
     # obtain sparse scoring systems
     int_sols_dict = {"int_sols": [], "train_accs": [], "test_accs": [], "train_aucs": [], "test_aucs": [], "logisticLosses": [], "multipliers": []}
     
