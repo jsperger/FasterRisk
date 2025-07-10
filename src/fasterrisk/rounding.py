@@ -95,11 +95,11 @@ class starRaySearchModel:
             tmp_support_mask[tmp_support_indices] = True
 
             # during rounding, two continuous solutions may be rounded to the same integer solution (integer support becomes a strict subset of continuous support); if so, we only keep the first one
-            tmp_support_mask_str = tmp_support_mask.tostring()
-            if tmp_support_mask_str in sparseDiversePool_integer_support_mask_set:
+            tmp_support_mask_bytes = tmp_support_mask.tobytes()
+            if tmp_support_mask_bytes in sparseDiversePool_integer_support_mask_set:
                 continue
 
-            sparseDiversePool_integer_support_mask_set.add(tmp_support_mask_str)
+            sparseDiversePool_integer_support_mask_set.add(tmp_support_mask_bytes)
             multipliers.append(tmp_multiplier)
             sparseDiversePool_integer.append(tmp_sparseDiversePool_integer)
         
