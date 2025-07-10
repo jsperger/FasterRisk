@@ -9,9 +9,9 @@ authors = [
     { name = "Margo Setlzer", email = "mseltzer@cs.ubc.ca" },
     { name = "Cynthia Rudin", email = "cynthia@cs.duke.edu" },
 ]
-requires-python = "~=3.11"
+requires-python = ">=3.11"
 readme = "README.md"
-license = "BSD 3-Clause"
+license = "BSD-3-Clause"
 maintainers = [{ name = "Jiachang Liu", email = "jiachang.liu@duke.edu" }]
 dependencies = [
     "numpy>=1.26.0,<2",
