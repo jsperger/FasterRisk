@@ -43,10 +43,10 @@ If you are proposing a feature:
 Ready to contribute? Here's how to set up `fasterrisk` for local development.
 
 1. Download a copy of `fasterrisk` locally.
-2. Install `fasterrisk` using `poetry`:
+2. Install `fasterrisk` using `uv`:
 
     ```console
-    $ poetry install
+    $ uv sync --dev
     ```
 
 3. Use `git` (or similar) to create a branch for local development and make your changes:

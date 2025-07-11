@@ -137,15 +137,15 @@ If you find our work useful in your research, please consider citing the followi
 
 <!-- # How to Build and Push to pypi-test and pypi
 ```terminal
-rm dist/*
-poetry build
+rm -rf dist/*
+uv build
 poetry config repositories.test-pypi https://test.pypi.org/legacy/
 
 # push to pypi-test
-poetry publish -r test-pypi -u __token__ -p pypi-TOKEN
-python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple fasterrisk
+uv publish --index testpypi --token pypi-TOKEN
+# install from TestPyPI
+uv pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ fasterrisk
 
 # push to pypi
-poetry publish -u __token__ -p pypi-TOKEN
-
+uv publish --token pypi-TOKEN
 ``` -->
